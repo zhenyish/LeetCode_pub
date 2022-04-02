@@ -23,7 +23,7 @@ The judge will test your solution with the following code:
 
         assert k == expectedNums.length;
         for (int i = 0; i < k; i++) {
-            assert nums[i] == expectedNums[i];
+                assert nums[i] == expectedNums[i];
         }
 
 If all assertions pass, then your solution will be accepted.
@@ -32,18 +32,19 @@ If all assertions pass, then your solution will be accepted.
 Example 1:
 ------------------------
 
-    Input: words = ["abc","car","ada","racecar","cool"]
-    Output: "ada"
-    Explanation: The first string that is palindromic is "ada".
-    Note that "racecar" is also palindromic, but it is not the first.
+    Input: nums = [1,1,2]
+    Output: 2, nums = [1,2,_]
+    Explanation: Your function should return k = 2, with the first two elements of nums being 1 and 2 respectively.
+    It does not matter what you leave beyond the returned k (hence they are underscores).
 
 ------------------------
 Example 2:
 ------------------------
 
-    Input: words = ["notapalindrome","racecar"]
-    Output: "racecar"
-    Explanation: The first and only string that is palindromic is "racecar".
+    Input: nums = [0,0,1,1,1,2,2,3,3,4]
+    Output: 5, nums = [0,1,2,3,4,_,_,_,_,_]
+    Explanation: Your function should return k = 5, with the first five elements of nums being 0, 1, 2, 3, and 4 respectively.
+    It does not matter what you leave beyond the returned k (hence they are underscores).
 
 ------------------------
 Example 3:
@@ -57,9 +58,9 @@ Example 3:
 Constraints:
 ------------------------
 
-    1 <= words.length <= 100
-    1 <= words[i].length <= 100
-    words[i] consists only of lowercase English letters.
+    1 <= nums.length <= 3 * 10^4
+    -100 <= nums[i] <= 100
+    nums is sorted in non-decreasing order.
  
 --------------------
 Source
@@ -71,10 +72,16 @@ LeetCode
 Hint1
 -------------------
 
-Iterate through the elements in order. As soon as the current element is a palindrome, return it.
+In this problem, the key point to focus on is the input array being sorted. As far as duplicate elements are concerned, what is their positioning in the array when the given array is sorted? Look at the image above for the answer. If we know the position of one of the elements, do we also know the positioning of all the duplicate elements?
 
 -------------------
 Hint2
 -------------------
 
-To check if an element is a palindrome, can you reverse the string?
+We need to modify the array in-place and the size of the final array would potentially be smaller than the size of the input array. So, we ought to use a two-pointer approach here. One, that would keep track of the current element in the original array and another one for just the unique elements.
+
+-------------------
+Hint3
+-------------------
+
+Essentially, once an element is encountered, you simply need to bypass its duplicates and move on to the next unique element.
